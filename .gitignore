@@ -1,0 +1,6 @@
+dijkstra
+*.o
+*.out
+*.exe
+*.log
+
