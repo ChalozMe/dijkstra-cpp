@@ -4,6 +4,6 @@
 #include "graph.h"
 #include <vector>
 
-std::vector<long long> dijkstra(const Graph& g, int start);
+std::vector<long long> dijkstra(const Graph& g, int start, int target = -1);
 
 #endif

@@ -3,7 +3,7 @@
 #include <string>
 #include <limits>
 #include <vector>
-#include <chrono>          // ← añadido
+#include <chrono>
 #include "graph.h"
 #include "dijkstra.h"
 
@@ -30,11 +30,11 @@ int main(int argc, char** argv)
     int start, target;
     in >> start >> target;
 
-    Graph g(V);  
+    Graph g(V);
 
     for (int i = 0; i < V; i++) {
         int v;
-        in >> v;  
+        in >> v;  // ignorado
     }
 
     for (int i = 0; i < E; i++) {
@@ -46,12 +46,11 @@ int main(int argc, char** argv)
     // ---------- Medición del tiempo ----------
     auto t1 = std::chrono::high_resolution_clock::now();
 
-    auto dist = dijkstra(g, start);
+    auto dist = dijkstra(g, start, target);   // ← con early stop
 
     auto t2 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::micro> elapsed = t2 - t1;
     std::cout << "Tiempo Dijkstra (µs): " << elapsed.count() << "\n";
-
     // -----------------------------------------
 
     long long ans = dist[target];

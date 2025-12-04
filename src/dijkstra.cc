@@ -2,13 +2,13 @@
 #include <queue>
 #include <limits>
 
-std::vector<long long> dijkstra(const Graph& g, int start) {
+std::vector<long long> dijkstra(const Graph& g, int start, int target) {
     const long long INF = std::numeric_limits<long long>::max();
 
     std::vector<long long> dist(g.size(), INF);
     dist[start] = 0;
 
-    using State = std::pair<long long,int>; 
+    using State = std::pair<long long, int>; // (dist, nodo)
     std::priority_queue<State, std::vector<State>, std::greater<State>> pq;
 
     pq.push({0, start});
@@ -17,11 +17,14 @@ std::vector<long long> dijkstra(const Graph& g, int start) {
         auto [d, u] = pq.top();
         pq.pop();
 
-        if (d > dist[u]) continue;
+        if (d != dist[u]) continue;
+
+        // EARLY STOP
+        if (u == target) break;
 
         for (auto& edge : g.neighbors(u)) {
             int v = edge.first;
-            int w = edge.second;
+            long long w = edge.second;
 
             long long nd = d + w;
             if (nd < dist[v]) {
